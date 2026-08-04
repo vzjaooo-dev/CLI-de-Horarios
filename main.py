@@ -1,5 +1,3 @@
-ligado = True
-
 class Disciplinas():
     def __init__(self, nome, prof, dia, hora):
         self.nome = nome
