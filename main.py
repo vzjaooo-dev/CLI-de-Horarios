@@ -19,11 +19,11 @@ ligado = True
 
 while ligado:
     print("---Quadro de Horários---\n")
-    print("1.Cadastrar Disciplina\n2.Visualizar Horários\n3.Buscar Disciplina (dia da semana)\n4.Sair\n")
+    print("1.Cadastrar Disciplina\n2.Visualizar Horários\n3.Buscar Disciplina (dia da semana)\n4.Gerar Relatório .txt\n5.Sair")
 
-    decisao = int(input("\nDigite a opção desejada: \n"))
+    decisao = input("\nDigite a opção desejada: \n").strip()
 
-    if decisao == 1:
+    if decisao == "1":
         disciplinaNome = input("\nInforme o nome da disciplina: \n")
         disciplinaProf = input("Infome o professor da disciplina: \n")
         disciplinaDia = input("Informe o dia da disciplina: \n").strip().lower()
@@ -39,13 +39,13 @@ while ligado:
         if not temConflito:        
             disciplinaNova = Disciplinas(disciplinaNome, disciplinaProf, disciplinaDia, disciplinaHora)
             quadroHorarios.append(disciplinaNova)
-    elif decisao == 2:
+    elif decisao == "2":
         if len(quadroHorarios) == 0:
             print("\nNenhuma disciplina cadastrada até o momento.\n")
         else:
             for disciplina in quadroHorarios:
-                print(disciplina.retornarResumo())
-    elif decisao == 3:
+                print(disciplina.retornarResumo(), end= "")
+    elif decisao == "3":
         buscarDia = input("\nInforme o dia que quer consultar: \n").strip().lower()
         encontrou = False
 
@@ -55,7 +55,16 @@ while ligado:
                 encontrou = True
         if not encontrou:
             print("\nNenhuma aula cadastrada nesse dia.\n")
-    elif decisao == 4:
+    elif decisao == "4":
+        if len(quadroHorarios) == 0:
+            print("\nLista vazia.")
+        else:
+            with open("relatorio.txt", "w", encoding="utf-8") as arquivo:
+                arquivo.write("---Relátorio de Horários---\n\n")
+                for disciplina in quadroHorarios:
+                    arquivo.write(disciplina.retornarResumo())
+            print("\nRelátorio de Horários 'relatorio.txt' gerado com sucesso.\n")
+    elif decisao == "5":
         ligado = False
         print("Saindo do sistema... Até logo!")
     else:
